@@ -2,6 +2,17 @@
 
 [English](./README.md)
 
+<div align="center">
+  <img 
+    src="https://github.com/user-attachments/assets/e15d9ae4-d06d-4130-9564-3e446bc4b6db" 
+    alt="xray-apple"
+    width="80%"
+    height="80%"
+  />
+  <p><em>Web page element capture</em></p>
+</div>
+
+
 범용 UI 캡처 및 분석 도구입니다.
 
 Chrome 개발자 도구의 인스펙터(Inspector)처럼, macOS 전체 시스템의 UI 요소를 검사하고 캡처할 수 있는 데스크톱 애플리케이션입니다.
