@@ -3,14 +3,23 @@
 [English](./README.md)
 
 <div align="center">
-  <img 
-    src="https://github.com/user-attachments/assets/e15d9ae4-d06d-4130-9564-3e446bc4b6db" 
-    alt="xray-apple"
-    width="80%"
-    height="80%"
-  />
-  <p><em>Web page element capture</em></p>
+  <table>
+    <tr>
+      <td align="center">
+        <img src="https://github.com/user-attachments/assets/e15d9ae4-d06d-4130-9564-3e446bc4b6db" width="100%" />
+        <br />
+        <em>웹 페이지 요소 캡처</em>
+      </td>
+      <td align="center">
+        <img src="https://github.com/user-attachments/assets/a2f2ce9c-12ae-48af-a5d4-655d2d90baef" width="85%" />
+        <br />
+        <em>맥 OS 프로그램 요소 캡처</em>
+      </td>
+    </tr>
+  </table>
 </div>
+
+</br>
 
 
 범용 UI 캡처 및 분석 도구입니다.
