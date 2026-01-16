@@ -1,26 +1,30 @@
 <p align="center">
   <a href="https://github.com/wlswo/xray">
-	<picture>
-		<source media="(prefers-color-scheme: dark)" srcset="./assets/xray-logo.png">
-		<source media="(prefers-color-scheme: light)" srcset="./assets/xray-logo.png">
-		<img alt="Wave Terminal Logo" src="./assets/wave-light.png" width="100%">
-	</picture>
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="./assets/xray-logo.png">
+      <source media="(prefers-color-scheme: light)" srcset="./assets/xray-logo.png">
+      <img alt="Xray Logo" src="./assets/xray-logo.png" width="100%">
+    </picture>
   </a>
-  <br/>
 </p>
 
-<img srcset="./assets/line-gradient.svg" alt="line break" width="100%" height="3px">
+<p align="center">
+  <img src="https://placehold.co/1000x3/457857/457857.png" width="100%" alt="green line" height="1.2px">
+</p>
 
 <br/>
+
 <div align="center">
-
-[English](./README.md) · [한국어](./README.KR.md) · **简体中文** · [日本語](./README_JA.md)
-
+  <a href="./README.md">English</a> · <a href="./README.KR.md">한국어</a> · <strong>简体中文</strong> · <a href="./README_JA.md">日本語</a>
 </div>
 
-<img srcset="./assets/line-gradient.svg" alt="line break" width="100%" height="3px">
+<br/>
 
-<br/><br/>
+<p align="center">
+  <img src="https://placehold.co/1000x3/457857/457857.png" width="100%" alt="green line" height="1.2px">
+</p>
+
+<br/>
 
 <div align="center">
   <table>

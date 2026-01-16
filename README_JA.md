@@ -1,26 +1,30 @@
 <p align="center">
   <a href="https://github.com/wlswo/xray">
-	<picture>
-		<source media="(prefers-color-scheme: dark)" srcset="./assets/xray-logo.png">
-		<source media="(prefers-color-scheme: light)" srcset="./assets/xray-logo.png">
-		<img alt="Wave Terminal Logo" src="./assets/wave-light.png" width="100%">
-	</picture>
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="./assets/xray-logo.png">
+      <source media="(prefers-color-scheme: light)" srcset="./assets/xray-logo.png">
+      <img alt="Xray Logo" src="./assets/xray-logo.png" width="100%">
+    </picture>
   </a>
-  <br/>
 </p>
 
-<img srcset="./assets/line-gradient.svg" alt="line break" width="100%" height="3px">
+<p align="center">
+  <img src="https://placehold.co/1000x3/457857/457857.png" width="100%" alt="green line" height="1.2px">
+</p>
 
 <br/>
+
 <div align="center">
-
-[English](./README.md) · [한국어](./README.KR.md) · [简体中文](./README_CN.md) · **日本語**
-
+  <a href="./README.md">English</a> · <a href="./README.KR.md">한국어</a> · <a href="./README_CN.md">简体中文</a> · <strong>日本語</strong>
 </div>
 
-<img srcset="./assets/line-gradient.svg" alt="line break" width="100%" height="3px">
+<br/>
 
-<br/><br/>
+<p align="center">
+  <img src="https://placehold.co/1000x3/457857/457857.png" width="100%" alt="green line" height="1.2px">
+</p>
+
+<br/>
 
 <div align="center">
   <table>
@@ -43,12 +47,12 @@
 
 汎用 UI キャプチャおよびインスペクションツール。
 
-Chrome デベロッパー ツールのインスペクターのように, OS 全体の UI 要素を検査およびキャプチャするための macOS デスクトップ アプリケーションです。
+Chrome デベロッパー ツールのインスペクターのように、OS 全体の UI 要素を検査およびキャプチャするための macOS デスクトップ アプリケーションです。
 
 ## 主な機能
 
 - **グローバルインスペクター:** 画面上のウィンドウ、ボタン、または UI 要素にマウスを合わせると、ハイライト表示されます。
-- **スマートキャプチャ:** ハイライト된 要素をクリックすると、即座にクリップボードにキャプチャされます。
+- **スマートキャプチャ:** ハイライトされた要素をクリックすると、即座にクリップボードにキャプチャされます。
 - **システムトレイ統合:** バックグラウンドで静かに実行されます。
 - **グローバルショートカット:** 必要に応じてインスペクターを起動できます。
 
@@ -59,14 +63,14 @@ Chrome デベロッパー ツールのインスペクターのように, OS 全�
     ```bash
     npm install
     ```
-3.  **開発ビル드の実行:**
+3.  **開発ビル드의 実行:**
     ```bash
     npm run tauri dev
     ```
 
 ## プロダクションビル드
 
-本番環境用のアプリケーションパッケージをビル드하려면：
+本番環境用のアプリケーションパッケージをビルドするには：
 
 1.  **標準ビル드:**
     ```bash
@@ -78,9 +82,9 @@ Chrome デベロッパー ツールのインスペクターのように, OS 全�
     ```bash
     npm run build:to --new_version=1.1.0
     ```
-    *このコマンドは `package.json` と `Cargo.toml` を指定されたバージョンに更新し、ビル드プロセスを実行します。*
+    *このコマンドは package.json と Cargo.toml を指定されたバージョンに更新し、ビルドプロセスを実行します。*
 
-生成된 アプリケーションパッケージは `src-tauri/target/release/bundle/` に配置されます。
+生成されたアプリケーションパッケージは `src-tauri/target/release/bundle/` に配置されます。
 
 ## 使用方法
 
@@ -89,7 +93,7 @@ Chrome デベロッパー ツールのインスペクターのように, OS 全�
     *   アプリが動作しない場合は、*システム設定 > プライバシーとセキュリティ* を確認し、権限が有効になっていることを確認してください。
 
 2.  **インスペクションの開始:**
-    *   アプリはバックグラウンドで起動します（メニューバーのアイコンを確認してください）。
+    *   アプリは백그라운드で起動します（メニューバーのアイコンを確認してください）。
     *   <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>X</kbd> を押してオーバーレイを有効にします。
 
 3.  **キャプチャ:**
@@ -102,8 +106,8 @@ Chrome デベロッパー ツールのインスペクターのように, OS 全�
 
 ## アーキテクチャ
 
-- **フロントエンド:** React + TypeScript (視覚적 オーバーレイ)
-- **バックエンド:** Rust (Tauri, Accessibility API, CoreGraphics)
+- **フロントエンド:** React + TypeScript (視覚的オーバーレイ)
+- **백엔드:** Rust (Tauri, Accessibility API, CoreGraphics)
 - **状態管理:** Tauri イベント (`element-hover`)
 
 ## ライセンス
