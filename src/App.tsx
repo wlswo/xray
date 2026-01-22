@@ -8,6 +8,7 @@ interface UIElementInfo {
   y: number;
   width: number;
   height: number;
+  role: string;
 }
 
 function App() {
@@ -38,6 +39,9 @@ function App() {
     };
   }, []);
 
+  // Helper to remove "AX" prefix from accessibility roles
+  const formatRole = (role: string) => role.replace(/^AX/, "");
+
   return (
     <div
       style={{
@@ -55,13 +59,40 @@ function App() {
             top: `${highlight.y}px`,
             width: `${highlight.width}px`,
             height: `${highlight.height}px`,
-            border: "2px solid red",
+            // Use inset box-shadow instead of border to prevent clipping on screen edges
+            boxShadow: "inset 0 0 0 2px red", 
             backgroundColor: "rgba(255, 0, 0, 0.1)",
             pointerEvents: "none",
             boxSizing: "border-box",
-            transition: "all 0.05s ease-out", // Smooth box movement
+            transition: "all 0.05s ease-out", 
           }}
-        />
+        >
+          {/* Info HUD Label */}
+          <div
+            style={{
+              position: "absolute",
+              top: highlight.y < 30 ? "100%" : "-26px", 
+              left: "0",
+              backgroundColor: "#cc0000", 
+              color: "white",
+              padding: "2px 6px",
+              fontSize: "11px",
+              fontFamily: "system-ui, sans-serif",
+              fontWeight: "bold",
+              whiteSpace: "nowrap",
+              borderRadius: "2px",
+              zIndex: 10000,
+              boxShadow: "0 1px 3px rgba(0,0,0,0.3)",
+              marginTop: highlight.y < 30 ? "4px" : "0", 
+            }}
+          >
+            <span style={{ opacity: 0.9 }}>{formatRole(highlight.role)}</span>
+            <span style={{ margin: "0 4px", opacity: 0.5 }}>|</span>
+            <span style={{ fontFamily: "monospace" }}>
+              {Math.round(highlight.width)} × {Math.round(highlight.height)}
+            </span>
+          </div>
+        </div>
       )}
     </div>
   );
