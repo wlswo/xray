@@ -52,7 +52,9 @@ macOS Desktop application for inspecting and capturing UI elements across the en
 ## Features
 
 - **Global Inspector:** Hover over any window, button, or UI element on your screen to see it highlighted.
+- **Info HUD:** Real-time display of element role and dimensions (e.g., `Button | 120 × 40`).
 - **Smart Capture:** Click the highlighted element to instantly capture it to your clipboard.
+- **Enhanced Visibility:** Inset highlight ensures visibility even at screen edges.
 - **System Tray Integration:** Runs quietly in the background.
 - **Global Shortcut:** Activate the inspector on demand.
 
