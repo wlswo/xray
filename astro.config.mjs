@@ -3,6 +3,7 @@ import tailwind from '@astrojs/tailwind';
 
 export default defineConfig({
   site: 'https://wlswo.me',
-  base: '/xray',
+  base: '/xray/',
+  trailingSlash: 'ignore',
   integrations: [tailwind()],
 });

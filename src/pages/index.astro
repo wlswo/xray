@@ -6,50 +6,50 @@ const base = import.meta.env.BASE_URL;
 <Layout title="Xray — See through your screen">
   <!-- Nav -->
   <nav class="fixed top-0 w-full z-50 backdrop-blur-md bg-[#0a0a0a]/80 border-b border-white/5">
-    <div class="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
-      <a href={base} class="flex items-center gap-2">
-        <img src={`${base}xray-logo.png`} alt="Xray" class="h-7" />
-        <span class="font-semibold text-white text-lg">Xray</span>
+    <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+      <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;" class="flex items-center gap-3">
+        <img src={`${base}icon.png`} alt="Xray" class="h-10 rounded-lg" />
+        <span class="font-semibold text-white text-2xl">Xray</span>
       </a>
-      <div class="flex items-center gap-6">
-        <a href="#features" class="text-sm text-gray-400 hover:text-white transition-colors">Features</a>
-        <a href="#demo" class="text-sm text-gray-400 hover:text-white transition-colors">Demo</a>
-        <a href="https://github.com/wlswo/xray" target="_blank" rel="noopener" class="text-sm text-gray-400 hover:text-white transition-colors flex items-center gap-1">
-          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
-          GitHub
+      <div class="flex items-center gap-8">
+        <a href="#features" class="text-lg text-gray-400 hover:text-white transition-colors">Features</a>
+        <a href="#demo" class="text-lg text-gray-400 hover:text-white transition-colors">Demo</a>
+        <a href="https://github.com/wlswo/xray" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-5 py-2 rounded-lg bg-white/5 border border-white/10 text-base text-gray-300 hover:bg-white/10 hover:text-white transition-all">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          Star on GitHub
         </a>
       </div>
     </div>
   </nav>
 
   <!-- Hero -->
-  <section class="relative min-h-screen flex items-center justify-center pt-14">
+  <section class="relative pt-28 pb-20">
     <!-- Background glow -->
     <div class="absolute inset-0 overflow-hidden">
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-xray-green/10 rounded-full blur-[120px]"></div>
+      <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-xray-green/10 rounded-full blur-[120px]"></div>
     </div>
 
-    <div class="relative max-w-4xl mx-auto px-6 text-center">
-      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-xray-green/30 bg-xray-green/10 mb-8">
+    <div class="relative max-w-[1200px] mx-auto px-6 text-center">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-xray-green/30 bg-xray-green/10 mb-6">
         <span class="w-2 h-2 rounded-full bg-xray-green animate-pulse"></span>
         <span class="text-xray-green-light text-sm font-medium">macOS Native App</span>
       </div>
 
-      <h1 class="text-5xl sm:text-7xl font-bold tracking-tight text-white mb-6">
+      <h1 class="text-5xl sm:text-7xl font-bold tracking-tight text-white mb-4">
         See through<br/>
         <span class="text-transparent bg-clip-text bg-gradient-to-r from-xray-green to-emerald-400">your screen</span>
       </h1>
 
-      <p class="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">
+      <p class="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto mb-8 leading-relaxed">
         Chrome DevTools Inspector, but for your entire macOS.
         Hover over any UI element, see it highlighted, click to capture.
       </p>
 
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-        <a href="https://github.com/wlswo/xray/releases/latest" target="_blank" rel="noopener"
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
+        <a href="https://github.com/wlswo/xray/releases/download/v1.1.0/xray_1.1.0_aarch64.dmg"
           class="group inline-flex items-center gap-2 px-8 py-3 bg-xray-green hover:bg-xray-green-light text-white font-semibold rounded-xl transition-all hover:shadow-[0_0_30px_rgba(69,120,87,0.4)]">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3"/></svg>
-          Download for Mac
+          Download for Mac <span class="font-normal text-white/60">(Apple Silicon)</span>
         </a>
         <a href="https://github.com/wlswo/xray" target="_blank" rel="noopener"
           class="inline-flex items-center gap-2 px-8 py-3 border border-white/10 hover:border-white/25 text-gray-300 hover:text-white font-medium rounded-xl transition-all">
@@ -58,13 +58,28 @@ const base = import.meta.env.BASE_URL;
       </div>
 
       <!-- Shortcut hint -->
-      <div class="mt-12 flex items-center justify-center gap-2 text-gray-500 text-sm">
+      <div class="mb-12 flex items-center justify-center gap-2 text-gray-500 text-sm">
         <kbd class="px-2 py-1 bg-white/5 border border-white/10 rounded text-xs font-mono">Cmd</kbd>
         <span>+</span>
         <kbd class="px-2 py-1 bg-white/5 border border-white/10 rounded text-xs font-mono">Shift</kbd>
         <span>+</span>
         <kbd class="px-2 py-1 bg-white/5 border border-white/10 rounded text-xs font-mono">X</kbd>
         <span class="ml-2">to activate</span>
+      </div>
+
+      <!-- Video Showcase -->
+      <div id="video-container" class="w-full max-w-[1200px] mx-auto">
+        <!-- Tab buttons -->
+        <div class="flex items-center justify-center gap-2 mb-6">
+          <button id="btn-web" class="px-5 py-2 rounded-lg text-sm font-medium transition-all duration-300 bg-xray-green text-white">Web Capture</button>
+          <button id="btn-program" class="px-5 py-2 rounded-lg text-sm font-medium transition-all duration-300 bg-white/5 text-gray-400 hover:bg-white/10">App Capture</button>
+        </div>
+
+        <!-- Video frame -->
+        <div class="relative rounded-2xl border border-xray-green/20 bg-[#111] overflow-hidden shadow-[0_0_80px_rgba(69,120,87,0.25),0_0_160px_rgba(69,120,87,0.1)]">
+          <video id="video-web" src={`${base}xray-web.mp4`} autoplay loop muted playsinline class="w-full block transition-opacity duration-500"></video>
+          <video id="video-program" src={`${base}xray-program.mp4`} loop muted playsinline class="w-full absolute inset-0 opacity-0 transition-opacity duration-500"></video>
+        </div>
       </div>
     </div>
   </section>
@@ -137,13 +152,13 @@ const base = import.meta.env.BASE_URL;
         </div>
 
         <!-- Xray overlay highlight -->
-        <div id="xray-highlight" class="absolute pointer-events-none border-2 border-xray-green rounded-sm opacity-0 transition-all duration-150 ease-out"
-          style="box-shadow: 0 0 0 4000px rgba(0,0,0,0.3), inset 0 0 20px rgba(69,120,87,0.15);"></div>
+        <div id="xray-highlight" class="absolute pointer-events-none border-2 border-red-500 rounded-sm opacity-0 transition-all duration-150 ease-out"
+          style="box-shadow: 0 0 0 4000px rgba(0,0,0,0.3), inset 0 0 20px rgba(239,68,68,0.15);"></div>
 
         <!-- Info HUD -->
         <div id="xray-hud" class="absolute pointer-events-none opacity-0 transition-opacity duration-150 z-10">
-          <div class="bg-[#1a1a1a] border border-xray-green/40 rounded-lg px-3 py-1.5 text-xs font-mono whitespace-nowrap shadow-lg">
-            <span id="xray-hud-role" class="text-xray-green-light"></span>
+          <div class="bg-[#1a1a1a] border border-red-500/40 rounded-lg px-3 py-1.5 text-xs font-mono whitespace-nowrap shadow-lg">
+            <span id="xray-hud-role" class="text-red-400"></span>
             <span class="text-gray-500 mx-1.5">|</span>
             <span id="xray-hud-size" class="text-gray-400"></span>
           </div>
@@ -194,24 +209,67 @@ const base = import.meta.env.BASE_URL;
     </div>
   </section>
 
-  <!-- CTA -->
-  <section class="py-32">
-    <div class="max-w-3xl mx-auto px-6 text-center">
-      <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4">Ready to see through your screen?</h2>
-      <p class="text-gray-400 mb-10">Free and open source. Built with Rust and Tauri.</p>
-      <a href="https://github.com/wlswo/xray/releases/latest" target="_blank" rel="noopener"
-        class="inline-flex items-center gap-2 px-8 py-3 bg-xray-green hover:bg-xray-green-light text-white font-semibold rounded-xl transition-all hover:shadow-[0_0_30px_rgba(69,120,87,0.4)]">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3"/></svg>
-        Download for Mac
-      </a>
+  <!-- FAQ -->
+  <section id="faq" class="py-32">
+    <div class="max-w-3xl mx-auto px-6">
+      <h2 class="text-3xl sm:text-4xl font-bold text-white mb-12 text-center">FAQ</h2>
+
+      <div class="space-y-4">
+        <details class="group rounded-xl border border-white/5 bg-white/[0.02] open:border-white/10 transition-all">
+          <summary class="flex items-center justify-between cursor-pointer px-6 py-5 text-white font-medium">
+            Is Xray really free?
+            <svg class="w-5 h-5 text-gray-500 group-open:rotate-45 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+          </summary>
+          <div class="px-6 pb-5 text-gray-400 text-sm leading-relaxed">Yes, 100% free and open source under the MIT license. No accounts, no subscriptions, no tracking.</div>
+        </details>
+
+        <details class="group rounded-xl border border-white/5 bg-white/[0.02] open:border-white/10 transition-all">
+          <summary class="flex items-center justify-between cursor-pointer px-6 py-5 text-white font-medium">
+            Does it work with any application?
+            <svg class="w-5 h-5 text-gray-500 group-open:rotate-45 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+          </summary>
+          <div class="px-6 pb-5 text-gray-400 text-sm leading-relaxed">Xray uses the macOS Accessibility API, so it works with virtually any application — browsers, native apps, Finder, System Settings, and more.</div>
+        </details>
+
+        <details class="group rounded-xl border border-white/5 bg-white/[0.02] open:border-white/10 transition-all">
+          <summary class="flex items-center justify-between cursor-pointer px-6 py-5 text-white font-medium">
+            What permissions does Xray need?
+            <svg class="w-5 h-5 text-gray-500 group-open:rotate-45 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+          </summary>
+          <div class="px-6 pb-5 text-gray-400 text-sm leading-relaxed">Xray requires Accessibility and Screen Recording permissions. On first launch, macOS will prompt you to grant them in System Settings > Privacy & Security.</div>
+        </details>
+
+        <details class="group rounded-xl border border-white/5 bg-white/[0.02] open:border-white/10 transition-all">
+          <summary class="flex items-center justify-between cursor-pointer px-6 py-5 text-white font-medium">
+            Does it support Intel Macs?
+            <svg class="w-5 h-5 text-gray-500 group-open:rotate-45 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+          </summary>
+          <div class="px-6 pb-5 text-gray-400 text-sm leading-relaxed">Currently Xray is built for Apple Silicon (M1/M2/M3/M4). Intel Mac support via universal binary is planned for a future release.</div>
+        </details>
+
+        <details class="group rounded-xl border border-white/5 bg-white/[0.02] open:border-white/10 transition-all">
+          <summary class="flex items-center justify-between cursor-pointer px-6 py-5 text-white font-medium">
+            Where does the captured image go?
+            <svg class="w-5 h-5 text-gray-500 group-open:rotate-45 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+          </summary>
+          <div class="px-6 pb-5 text-gray-400 text-sm leading-relaxed">It goes straight to your clipboard. Just press Cmd+V to paste it into any app — Slack, Figma, Notion, or anywhere else.</div>
+        </details>
+      </div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="border-t border-white/5 py-8">
-    <div class="max-w-6xl mx-auto px-6 flex items-center justify-between text-sm text-gray-500">
-      <span>Xray</span>
-      <a href="https://github.com/wlswo/xray" target="_blank" rel="noopener" class="hover:text-gray-300 transition-colors">GitHub</a>
+  <footer class="border-t border-white/5 py-16">
+    <div class="max-w-6xl mx-auto px-6 flex flex-col items-center text-center">
+      <div class="flex items-center gap-2.5 mb-4">
+        <img src={`${base}icon.png`} alt="Xray" class="h-8 rounded-lg" />
+        <span class="font-semibold text-white text-xl">Xray</span>
+      </div>
+      <p class="text-gray-400 text-sm leading-relaxed mb-1">A simple, intuitive, and light universal UI capture and inspection tool for macOS.</p>
+      <p class="text-gray-500 text-sm">Built for creators, developers, and designers.</p>
+      <div class="mt-8 w-full">
+        <p class="text-gray-600 text-xs">MIT License &copy; 2026 Xray</p>
+      </div>
     </div>
   </footer>
 
@@ -269,6 +327,35 @@ const base = import.meta.env.BASE_URL;
     demo.addEventListener('mouseleave', () => {
       highlight.style.opacity = '0';
       hud.style.opacity = '0';
+    });
+  </script>
+
+  <!-- Video tab switch script -->
+  <script>
+    const videoWeb = document.getElementById('video-web') as HTMLVideoElement;
+    const videoProgram = document.getElementById('video-program') as HTMLVideoElement;
+    const btnWeb = document.getElementById('btn-web')!;
+    const btnProgram = document.getElementById('btn-program')!;
+
+    const activeClass = 'px-5 py-2 rounded-lg text-sm font-medium transition-all duration-300 bg-xray-green text-white';
+    const inactiveClass = 'px-5 py-2 rounded-lg text-sm font-medium transition-all duration-300 bg-white/5 text-gray-400 hover:bg-white/10';
+
+    btnWeb.addEventListener('click', () => {
+      videoWeb.currentTime = 0;
+      videoWeb.play();
+      videoWeb.style.opacity = '1';
+      videoProgram.style.opacity = '0';
+      btnWeb.className = activeClass;
+      btnProgram.className = inactiveClass;
+    });
+
+    btnProgram.addEventListener('click', () => {
+      videoProgram.currentTime = 0;
+      videoProgram.play();
+      videoWeb.style.opacity = '0';
+      videoProgram.style.opacity = '1';
+      btnProgram.className = activeClass;
+      btnWeb.className = inactiveClass;
     });
   </script>
 </Layout>
