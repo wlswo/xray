@@ -1,0 +1,274 @@
+---
+import Layout from '../layouts/Layout.astro';
+const base = import.meta.env.BASE_URL;
+---
+
+<Layout title="Xray — See through your screen">
+  <!-- Nav -->
+  <nav class="fixed top-0 w-full z-50 backdrop-blur-md bg-[#0a0a0a]/80 border-b border-white/5">
+    <div class="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
+      <a href={base} class="flex items-center gap-2">
+        <img src={`${base}xray-logo.png`} alt="Xray" class="h-7" />
+        <span class="font-semibold text-white text-lg">Xray</span>
+      </a>
+      <div class="flex items-center gap-6">
+        <a href="#features" class="text-sm text-gray-400 hover:text-white transition-colors">Features</a>
+        <a href="#demo" class="text-sm text-gray-400 hover:text-white transition-colors">Demo</a>
+        <a href="https://github.com/wlswo/xray" target="_blank" rel="noopener" class="text-sm text-gray-400 hover:text-white transition-colors flex items-center gap-1">
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+          GitHub
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="relative min-h-screen flex items-center justify-center pt-14">
+    <!-- Background glow -->
+    <div class="absolute inset-0 overflow-hidden">
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-xray-green/10 rounded-full blur-[120px]"></div>
+    </div>
+
+    <div class="relative max-w-4xl mx-auto px-6 text-center">
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-xray-green/30 bg-xray-green/10 mb-8">
+        <span class="w-2 h-2 rounded-full bg-xray-green animate-pulse"></span>
+        <span class="text-xray-green-light text-sm font-medium">macOS Native App</span>
+      </div>
+
+      <h1 class="text-5xl sm:text-7xl font-bold tracking-tight text-white mb-6">
+        See through<br/>
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-xray-green to-emerald-400">your screen</span>
+      </h1>
+
+      <p class="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">
+        Chrome DevTools Inspector, but for your entire macOS.
+        Hover over any UI element, see it highlighted, click to capture.
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="https://github.com/wlswo/xray/releases/latest" target="_blank" rel="noopener"
+          class="group inline-flex items-center gap-2 px-8 py-3 bg-xray-green hover:bg-xray-green-light text-white font-semibold rounded-xl transition-all hover:shadow-[0_0_30px_rgba(69,120,87,0.4)]">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3"/></svg>
+          Download for Mac
+        </a>
+        <a href="https://github.com/wlswo/xray" target="_blank" rel="noopener"
+          class="inline-flex items-center gap-2 px-8 py-3 border border-white/10 hover:border-white/25 text-gray-300 hover:text-white font-medium rounded-xl transition-all">
+          View Source
+        </a>
+      </div>
+
+      <!-- Shortcut hint -->
+      <div class="mt-12 flex items-center justify-center gap-2 text-gray-500 text-sm">
+        <kbd class="px-2 py-1 bg-white/5 border border-white/10 rounded text-xs font-mono">Cmd</kbd>
+        <span>+</span>
+        <kbd class="px-2 py-1 bg-white/5 border border-white/10 rounded text-xs font-mono">Shift</kbd>
+        <span>+</span>
+        <kbd class="px-2 py-1 bg-white/5 border border-white/10 rounded text-xs font-mono">X</kbd>
+        <span class="ml-2">to activate</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Demo -->
+  <section id="demo" class="relative py-32">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4">Try it right here</h2>
+        <p class="text-gray-400">Hover over the elements below. This is what Xray feels like.</p>
+      </div>
+
+      <!-- Mock UI -->
+      <div id="xray-demo" class="relative mx-auto max-w-4xl rounded-2xl border border-white/10 bg-[#111] overflow-hidden select-none">
+        <!-- Title bar -->
+        <div class="flex items-center gap-2 px-4 py-3 bg-[#1a1a1a] border-b border-white/5" data-xray-role="Toolbar">
+          <div class="flex gap-1.5">
+            <div class="w-3 h-3 rounded-full bg-[#ff5f57]" data-xray-role="Button"></div>
+            <div class="w-3 h-3 rounded-full bg-[#febc2e]" data-xray-role="Button"></div>
+            <div class="w-3 h-3 rounded-full bg-[#28c840]" data-xray-role="Button"></div>
+          </div>
+          <div class="flex-1 text-center text-xs text-gray-500" data-xray-role="StaticText">My Application</div>
+        </div>
+
+        <!-- Mock content -->
+        <div class="p-8 grid grid-cols-3 gap-6" data-xray-role="Group">
+          <!-- Sidebar -->
+          <div class="space-y-3" data-xray-role="List">
+            <div class="px-4 py-2 rounded-lg bg-xray-green/20 text-xray-green-light text-sm font-medium" data-xray-role="MenuItem">Dashboard</div>
+            <div class="px-4 py-2 rounded-lg text-gray-400 text-sm hover:bg-white/5" data-xray-role="MenuItem">Analytics</div>
+            <div class="px-4 py-2 rounded-lg text-gray-400 text-sm hover:bg-white/5" data-xray-role="MenuItem">Settings</div>
+            <div class="px-4 py-2 rounded-lg text-gray-400 text-sm hover:bg-white/5" data-xray-role="MenuItem">Users</div>
+          </div>
+
+          <!-- Main -->
+          <div class="col-span-2 space-y-6">
+            <!-- Stats row -->
+            <div class="grid grid-cols-3 gap-4" data-xray-role="Group">
+              <div class="p-4 rounded-xl bg-white/5 border border-white/5" data-xray-role="Group">
+                <div class="text-xs text-gray-500 mb-1" data-xray-role="StaticText">Users</div>
+                <div class="text-2xl font-bold text-white" data-xray-role="StaticText">12,847</div>
+              </div>
+              <div class="p-4 rounded-xl bg-white/5 border border-white/5" data-xray-role="Group">
+                <div class="text-xs text-gray-500 mb-1" data-xray-role="StaticText">Revenue</div>
+                <div class="text-2xl font-bold text-white" data-xray-role="StaticText">$48.2K</div>
+              </div>
+              <div class="p-4 rounded-xl bg-white/5 border border-white/5" data-xray-role="Group">
+                <div class="text-xs text-gray-500 mb-1" data-xray-role="StaticText">Growth</div>
+                <div class="text-2xl font-bold text-emerald-400" data-xray-role="StaticText">+23%</div>
+              </div>
+            </div>
+
+            <!-- Chart placeholder -->
+            <div class="h-40 rounded-xl bg-white/5 border border-white/5 flex items-end p-4 gap-2" data-xray-role="Image">
+              <div class="flex-1 bg-xray-green/30 rounded-t" style="height:40%"></div>
+              <div class="flex-1 bg-xray-green/40 rounded-t" style="height:65%"></div>
+              <div class="flex-1 bg-xray-green/50 rounded-t" style="height:45%"></div>
+              <div class="flex-1 bg-xray-green/60 rounded-t" style="height:80%"></div>
+              <div class="flex-1 bg-xray-green/70 rounded-t" style="height:60%"></div>
+              <div class="flex-1 bg-xray-green/80 rounded-t" style="height:90%"></div>
+              <div class="flex-1 bg-xray-green rounded-t" style="height:75%"></div>
+            </div>
+
+            <!-- Button row -->
+            <div class="flex gap-3" data-xray-role="Group">
+              <div class="px-5 py-2 bg-xray-green rounded-lg text-sm font-medium text-white" data-xray-role="Button">Export Data</div>
+              <div class="px-5 py-2 border border-white/10 rounded-lg text-sm text-gray-400" data-xray-role="Button">Share</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Xray overlay highlight -->
+        <div id="xray-highlight" class="absolute pointer-events-none border-2 border-xray-green rounded-sm opacity-0 transition-all duration-150 ease-out"
+          style="box-shadow: 0 0 0 4000px rgba(0,0,0,0.3), inset 0 0 20px rgba(69,120,87,0.15);"></div>
+
+        <!-- Info HUD -->
+        <div id="xray-hud" class="absolute pointer-events-none opacity-0 transition-opacity duration-150 z-10">
+          <div class="bg-[#1a1a1a] border border-xray-green/40 rounded-lg px-3 py-1.5 text-xs font-mono whitespace-nowrap shadow-lg">
+            <span id="xray-hud-role" class="text-xray-green-light"></span>
+            <span class="text-gray-500 mx-1.5">|</span>
+            <span id="xray-hud-size" class="text-gray-400"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section id="features" class="py-32">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4">How it works</h2>
+        <p class="text-gray-400">Three steps. Zero configuration.</p>
+      </div>
+
+      <div class="grid sm:grid-cols-3 gap-8">
+        <!-- Step 1 -->
+        <div class="group p-8 rounded-2xl border border-white/5 bg-white/[0.02] hover:border-xray-green/30 hover:bg-xray-green/[0.03] transition-all">
+          <div class="w-12 h-12 rounded-xl bg-xray-green/10 flex items-center justify-center mb-6 group-hover:bg-xray-green/20 transition-colors">
+            <svg class="w-6 h-6 text-xray-green" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15"/></svg>
+          </div>
+          <div class="text-sm text-xray-green-light font-medium mb-2">Step 1</div>
+          <h3 class="text-xl font-semibold text-white mb-3">Activate</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">Press <kbd class="px-1.5 py-0.5 bg-white/5 border border-white/10 rounded text-xs font-mono">Cmd+Shift+X</kbd> to enable the inspector overlay across your entire screen.</p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="group p-8 rounded-2xl border border-white/5 bg-white/[0.02] hover:border-xray-green/30 hover:bg-xray-green/[0.03] transition-all">
+          <div class="w-12 h-12 rounded-xl bg-xray-green/10 flex items-center justify-center mb-6 group-hover:bg-xray-green/20 transition-colors">
+            <svg class="w-6 h-6 text-xray-green" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.042 21.672L13.684 16.6m0 0l-2.51 2.225.569-9.47 5.227 7.917-3.286-.672zM12 2.25V4.5m5.834.166l-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m4.007-4.243l-1.59-1.59"/></svg>
+          </div>
+          <div class="text-sm text-xray-green-light font-medium mb-2">Step 2</div>
+          <h3 class="text-xl font-semibold text-white mb-3">Inspect</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">Hover over any window, button, or UI element. Xray highlights it in real-time with role and dimension info.</p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="group p-8 rounded-2xl border border-white/5 bg-white/[0.02] hover:border-xray-green/30 hover:bg-xray-green/[0.03] transition-all">
+          <div class="w-12 h-12 rounded-xl bg-xray-green/10 flex items-center justify-center mb-6 group-hover:bg-xray-green/20 transition-colors">
+            <svg class="w-6 h-6 text-xray-green" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75"/></svg>
+          </div>
+          <div class="text-sm text-xray-green-light font-medium mb-2">Step 3</div>
+          <h3 class="text-xl font-semibold text-white mb-3">Capture</h3>
+          <p class="text-gray-400 text-sm leading-relaxed">Click to capture the highlighted element. It's instantly copied to your clipboard. Paste it anywhere.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-32">
+    <div class="max-w-3xl mx-auto px-6 text-center">
+      <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4">Ready to see through your screen?</h2>
+      <p class="text-gray-400 mb-10">Free and open source. Built with Rust and Tauri.</p>
+      <a href="https://github.com/wlswo/xray/releases/latest" target="_blank" rel="noopener"
+        class="inline-flex items-center gap-2 px-8 py-3 bg-xray-green hover:bg-xray-green-light text-white font-semibold rounded-xl transition-all hover:shadow-[0_0_30px_rgba(69,120,87,0.4)]">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3"/></svg>
+        Download for Mac
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/5 py-8">
+    <div class="max-w-6xl mx-auto px-6 flex items-center justify-between text-sm text-gray-500">
+      <span>Xray</span>
+      <a href="https://github.com/wlswo/xray" target="_blank" rel="noopener" class="hover:text-gray-300 transition-colors">GitHub</a>
+    </div>
+  </footer>
+
+  <!-- Interactive Demo Script -->
+  <script>
+    const demo = document.getElementById('xray-demo')!;
+    const highlight = document.getElementById('xray-highlight')!;
+    const hud = document.getElementById('xray-hud')!;
+    const hudRole = document.getElementById('xray-hud-role')!;
+    const hudSize = document.getElementById('xray-hud-size')!;
+
+    function findXrayTarget(el: Element | null): Element | null {
+      while (el && el !== demo) {
+        if (el.hasAttribute('data-xray-role')) return el;
+        el = el.parentElement;
+      }
+      return null;
+    }
+
+    demo.addEventListener('mousemove', (e: MouseEvent) => {
+      const target = findXrayTarget(e.target as Element);
+      if (!target) {
+        highlight.style.opacity = '0';
+        hud.style.opacity = '0';
+        return;
+      }
+
+      const demoRect = demo.getBoundingClientRect();
+      const rect = target.getBoundingClientRect();
+
+      const top = rect.top - demoRect.top;
+      const left = rect.left - demoRect.left;
+      const width = rect.width;
+      const height = rect.height;
+
+      highlight.style.top = `${top}px`;
+      highlight.style.left = `${left}px`;
+      highlight.style.width = `${width}px`;
+      highlight.style.height = `${height}px`;
+      highlight.style.opacity = '1';
+
+      const role = target.getAttribute('data-xray-role') || 'Unknown';
+      hudRole.textContent = role;
+      hudSize.textContent = `${Math.round(width)} x ${Math.round(height)}`;
+
+      let hudTop = top - 36;
+      let hudLeft = left;
+      if (hudTop < 4) hudTop = top + height + 8;
+
+      hud.style.top = `${hudTop}px`;
+      hud.style.left = `${hudLeft}px`;
+      hud.style.opacity = '1';
+    });
+
+    demo.addEventListener('mouseleave', () => {
+      highlight.style.opacity = '0';
+      hud.style.opacity = '0';
+    });
+  </script>
+</Layout>
