@@ -12,7 +12,6 @@ const base = import.meta.env.BASE_URL;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Xray - Universal UI capture and inspection tool for macOS. Like Chrome DevTools inspector, but for your entire screen." />
-    <meta name="theme-color" content="#0a0a0a" />
     <meta property="og:title" content="Xray — See through your screen" />
     <meta property="og:description" content="Universal UI capture and inspection tool for macOS. Like Chrome DevTools inspector, but for your entire screen." />
     <meta property="og:image" content="https://raw.githubusercontent.com/wlswo/xray/main/assets/xray-logo.png" />
@@ -22,8 +21,69 @@ const base = import.meta.env.BASE_URL;
     <meta name="twitter:image" content="https://raw.githubusercontent.com/wlswo/xray/main/assets/xray-logo.png" />
     <link rel="icon" type="image/png" href={`${base}icon.png`} />
     <title>{title}</title>
+    {/* Theme detection - runs before paint to avoid flash of wrong theme */}
+    <script is:inline>
+      (function () {
+        try {
+          var stored = localStorage.getItem('theme');
+          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          var theme = stored || (prefersDark ? 'dark' : 'light');
+          if (theme === 'dark') document.documentElement.classList.add('dark');
+          document.documentElement.style.colorScheme = theme;
+        } catch (e) {}
+      })();
+    </script>
   </head>
-  <body class="bg-[#0a0a0a] text-gray-200 antialiased overflow-x-hidden">
+  <body class="bg-white dark:bg-[#0a0a0a] text-gray-800 dark:text-gray-200 antialiased overflow-x-hidden transition-colors duration-300">
     <slot />
+
+    <style is:global>
+      .reveal {
+        opacity: 0;
+        transform: translateY(24px);
+        transition: opacity 800ms cubic-bezier(0.16, 1, 0.3, 1),
+                    transform 800ms cubic-bezier(0.16, 1, 0.3, 1);
+        will-change: opacity, transform;
+      }
+      .reveal.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .reveal { opacity: 1; transform: none; transition: none; }
+      }
+    </style>
+
+    <script>
+      // Scroll reveal
+      const revealEls = document.querySelectorAll('.reveal');
+      if (revealEls.length > 0 && 'IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          }
+        }, { threshold: 0.1, rootMargin: '0px 0px -8% 0px' });
+
+        revealEls.forEach((el) => observer.observe(el));
+      } else {
+        // Fallback: show everything if IO unavailable
+        revealEls.forEach((el) => el.classList.add('is-visible'));
+      }
+
+      // Theme toggle
+      const themeToggle = document.getElementById('theme-toggle');
+      if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+          const isDark = document.documentElement.classList.toggle('dark');
+          const next = isDark ? 'dark' : 'light';
+          localStorage.setItem('theme', next);
+          document.documentElement.style.colorScheme = next;
+        });
+      }
+    </script>
   </body>
 </html>

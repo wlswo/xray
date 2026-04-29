@@ -1,22 +1,120 @@
 ---
 import Layout from '../layouts/Layout.astro';
 const base = import.meta.env.BASE_URL;
+
+// Fetch GitHub star count at build time (with timeout + graceful fallback)
+let stars: number | null = null;
+try {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 3000);
+  const res = await fetch('https://api.github.com/repos/wlswo/xray', {
+    signal: controller.signal,
+    headers: { Accept: 'application/vnd.github+json' },
+  });
+  clearTimeout(timeoutId);
+  if (res.ok) {
+    const data = await res.json();
+    stars = typeof data.stargazers_count === 'number' ? data.stargazers_count : null;
+  }
+} catch {
+  // Network error or rate limit — render without count
+}
+
+function formatStars(n: number): string {
+  if (n < 1000) return String(n);
+  if (n < 10000) return (n / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
+  return Math.floor(n / 1000) + 'k';
+}
+
+type Testimonial = {
+  quote: string;
+  name: string;
+  role: string;
+  initials: string;
+  avatar?: string;
+  avatarBg: string;
+  avatarText: string;
+};
+const testimonials: Testimonial[] = [
+  {
+    quote: "it is awesome!",
+    name: "mr.hukihwang",
+    role: "Diver",
+    initials: "MH",
+    avatar: `${base}avatars/hukihwang.png`,
+    avatarBg: "bg-cyan-500/20",
+    avatarText: "text-cyan-300",
+  },
+  {
+    quote: "Well-written. It's good.",
+    name: "Jay Choi",
+    role: "Plumber · Cursed by knowledge",
+    initials: "JC",
+    avatar: `${base}avatars/choi_jay.png`,
+    avatarBg: "bg-teal-500/20",
+    avatarText: "text-teal-300",
+  },
+  {
+    quote: "Hallelujah. No more screenshot purgatory.",
+    name: "San Ahn",
+    role: "Priest · Heaven's guide",
+    initials: "SA",
+    avatar: `${base}avatars/sanahn.png`,
+    avatarBg: "bg-indigo-500/20",
+    avatarText: "text-indigo-300",
+  },
+  {
+    quote: "Wanna try it. Helldivers, go.",
+    name: "Soong Sin",
+    role: "Engineer · $100K+ salary",
+    initials: "SS",
+    avatar: `${base}avatars/SungiShin.png`,
+    avatarBg: "bg-orange-500/20",
+    avatarText: "text-orange-300",
+  },
+  {
+    quote: "I trust two things: my Geiger counter and Xray.",
+    name: "Jordan Beck",
+    role: "Radiation Tech · One Hundred Eyes",
+    initials: "JB",
+    avatar: `${base}avatars/JordanBeck.png`,
+    avatarBg: "bg-lime-500/20",
+    avatarText: "text-lime-300",
+  },
+];
 ---
 
 <Layout title="Xray — See through your screen">
   <!-- Nav -->
-  <nav class="fixed top-0 w-full z-50 backdrop-blur-md bg-[#0a0a0a]/80 border-b border-white/5">
+  <nav class="fixed top-0 w-full z-50 backdrop-blur-md bg-white/80 dark:bg-[#0a0a0a]/80 border-b border-black/[0.06] dark:border-white/5">
     <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
       <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;" class="flex items-center gap-3">
         <img src={`${base}icon.png`} alt="Xray" class="h-10 rounded-lg" />
-        <span class="font-semibold text-white text-2xl">Xray</span>
+        <span class="font-semibold text-gray-900 dark:text-white text-2xl">Xray</span>
       </a>
       <div class="flex items-center gap-8">
-        <a href="#features" class="text-lg text-gray-400 hover:text-white transition-colors">Features</a>
-        <a href="#demo" class="text-lg text-gray-400 hover:text-white transition-colors">Demo</a>
-        <a href="https://github.com/wlswo/xray" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-5 py-2 rounded-lg bg-white/5 border border-white/10 text-base text-gray-300 hover:bg-white/10 hover:text-white transition-all">
-          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
-          Star on GitHub
+        <a href="#built-for" class="text-lg text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors">Use cases</a>
+        <a href="#demo" class="text-lg text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors">Demo</a>
+        <button id="theme-toggle" type="button" aria-label="Toggle theme" class="inline-flex items-center justify-center w-11 h-11 rounded-lg bg-black/[0.04] hover:bg-black/[0.06] dark:bg-white/5 dark:hover:bg-white/10 border border-black/[0.06] dark:border-white/10 text-gray-700 dark:text-gray-300 transition-colors">
+          {/* Sun (visible in dark mode → click goes to light) */}
+          <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"/></svg>
+          {/* Moon (visible in light mode → click goes to dark) */}
+          <svg class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"/></svg>
+        </button>
+        <a href="https://github.com/wlswo/xray" target="_blank" rel="noopener" class="inline-flex rounded-lg bg-black/[0.04] hover:bg-black/[0.06] dark:bg-white/5 dark:hover:bg-white/10 border border-black/[0.08] dark:border-white/10 text-lg text-gray-700 hover:text-gray-900 dark:text-gray-200 dark:hover:text-white transition-all">
+          {stars !== null && (
+            <Fragment>
+              <span class="flex items-center gap-2 pl-5 pr-4 py-3 font-semibold">
+                <svg class="w-5 h-5 text-amber-300" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.16c.969 0 1.371 1.24.588 1.81l-3.366 2.446a1 1 0 00-.364 1.118l1.286 3.957c.3.921-.755 1.688-1.539 1.118l-3.366-2.446a1 1 0 00-1.176 0l-3.366 2.446c-.784.57-1.838-.197-1.539-1.118l1.286-3.957a1 1 0 00-.364-1.118L2.05 9.384c-.783-.57-.38-1.81.588-1.81h4.16a1 1 0 00.95-.69l1.286-3.957z"/></svg>
+                {formatStars(stars)}
+              </span>
+              <span aria-hidden="true" class="w-px bg-black/[0.1] dark:bg-white/15 my-2"></span>
+            </Fragment>
+          )}
+          <span class={`flex items-center gap-2 py-3 ${stars !== null ? 'pl-4 pr-5' : 'px-5'}`}>
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            Star on GitHub
+          </span>
         </a>
       </div>
     </div>
@@ -35,61 +133,122 @@ const base = import.meta.env.BASE_URL;
         <span class="text-xray-green-light text-sm font-medium">macOS Native App</span>
       </div>
 
-      <h1 class="text-5xl sm:text-7xl font-bold tracking-tight text-white mb-4">
-        See through<br/>
-        <span class="text-transparent bg-clip-text bg-gradient-to-r from-xray-green to-emerald-400">your screen</span>
+      <h1 class="text-5xl sm:text-7xl font-bold tracking-tight text-gray-900 dark:text-white mb-4 hero-headline">
+        <span class="hero-word" style="--i: 0">See</span>
+        <span class="hero-word" style="--i: 1">through</span><br/>
+        <span class="hero-word hero-word-gradient text-transparent bg-clip-text bg-gradient-to-r from-xray-green via-emerald-400 to-xray-green" style="--i: 2">your screen</span>
       </h1>
 
-      <p class="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto mb-8 leading-relaxed">
-        Chrome DevTools Inspector, but for your entire macOS.
-        Hover over any UI element, see it highlighted, click to capture.
+      <p class="text-lg sm:text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-3 leading-relaxed">
+        Chrome DevTools Inspector — for your entire macOS.
+      </p>
+      <p class="text-base text-gray-500 dark:text-gray-500 max-w-2xl mx-auto mb-8 leading-relaxed">
+        Stop the screenshot &rarr; measure &rarr; annotate cycle.
       </p>
 
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
+      <div class="flex flex-col items-center justify-center gap-3 mb-8">
         <a href="https://github.com/wlswo/xray/releases/download/v1.1.0/xray_1.1.0_aarch64.dmg"
           class="group inline-flex items-center gap-2 px-8 py-3 bg-xray-green hover:bg-xray-green-light text-white font-semibold rounded-xl transition-all hover:shadow-[0_0_30px_rgba(69,120,87,0.4)]">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5 5-5M12 15V3"/></svg>
-          Download for Mac <span class="font-normal text-white/60">(Apple Silicon)</span>
+          Download for Mac
         </a>
-        <a href="https://github.com/wlswo/xray" target="_blank" rel="noopener"
-          class="inline-flex items-center gap-2 px-8 py-3 border border-white/10 hover:border-white/25 text-gray-300 hover:text-white font-medium rounded-xl transition-all">
-          View Source
-        </a>
+        <p class="text-xs text-gray-500">Apple Silicon (M1/M2/M3/M4) &middot; Intel support coming soon</p>
       </div>
 
       <!-- Shortcut hint -->
-      <div class="mb-12 flex items-center justify-center gap-2 text-gray-500 text-sm">
-        <kbd class="px-2 py-1 bg-white/5 border border-white/10 rounded text-xs font-mono">Cmd</kbd>
-        <span>+</span>
-        <kbd class="px-2 py-1 bg-white/5 border border-white/10 rounded text-xs font-mono">Shift</kbd>
-        <span>+</span>
-        <kbd class="px-2 py-1 bg-white/5 border border-white/10 rounded text-xs font-mono">X</kbd>
-        <span class="ml-2">to activate</span>
+      <div class="mb-12 inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-black/[0.03] dark:bg-white/[0.03] border border-black/[0.06] dark:border-white/5">
+        <span class="text-gray-600 dark:text-gray-500 text-sm mr-1 hidden sm:inline">Press</span>
+        <kbd class="px-2.5 py-1 bg-black/[0.06] dark:bg-white/10 border border-black/[0.1] dark:border-white/15 rounded-md text-sm font-mono font-semibold text-gray-800 dark:text-gray-100">⌘ Cmd</kbd>
+        <span class="text-gray-400 dark:text-gray-500">+</span>
+        <kbd class="px-2.5 py-1 bg-black/[0.06] dark:bg-white/10 border border-black/[0.1] dark:border-white/15 rounded-md text-sm font-mono font-semibold text-gray-800 dark:text-gray-100">Shift</kbd>
+        <span class="text-gray-400 dark:text-gray-500">+</span>
+        <kbd class="px-2.5 py-1 bg-black/[0.06] dark:bg-white/10 border border-black/[0.1] dark:border-white/15 rounded-md text-sm font-mono font-semibold text-gray-800 dark:text-gray-100">X</kbd>
+        <span class="text-gray-600 dark:text-gray-400 text-sm ml-1">to activate anywhere</span>
       </div>
 
       <!-- Video Showcase -->
       <div id="video-container" class="w-full max-w-[1200px] mx-auto">
-        <!-- Tab buttons -->
-        <div class="flex items-center justify-center gap-2 mb-6">
-          <button id="btn-web" class="px-5 py-2 rounded-lg text-sm font-medium transition-all duration-300 bg-xray-green text-white">Web Capture</button>
-          <button id="btn-program" class="px-5 py-2 rounded-lg text-sm font-medium transition-all duration-300 bg-white/5 text-gray-400 hover:bg-white/10">App Capture</button>
+        <!-- Stories-style progress bars -->
+        <div class="flex gap-3 mb-4">
+          <button type="button" data-video-idx="0" class="flex-1 text-left group cursor-pointer">
+            <div data-progress-label class="text-base font-semibold text-xray-green-light mb-2 transition-colors group-hover:text-gray-900 dark:group-hover:text-white">Web Capture</div>
+            <div class="h-1 bg-black/[0.1] dark:bg-white/10 rounded-full overflow-hidden">
+              <div data-progress-fill class="h-full bg-xray-green" style="width: 0%;"></div>
+            </div>
+          </button>
+          <button type="button" data-video-idx="1" class="flex-1 text-left group cursor-pointer">
+            <div data-progress-label class="text-base font-semibold text-gray-400 dark:text-gray-500 mb-2 transition-colors group-hover:text-gray-900 dark:group-hover:text-white">App Capture</div>
+            <div class="h-1 bg-black/[0.1] dark:bg-white/10 rounded-full overflow-hidden">
+              <div data-progress-fill class="h-full bg-xray-green" style="width: 0%;"></div>
+            </div>
+          </button>
         </div>
 
         <!-- Video frame -->
         <div class="relative rounded-2xl border border-xray-green/20 bg-[#111] overflow-hidden shadow-[0_0_80px_rgba(69,120,87,0.25),0_0_160px_rgba(69,120,87,0.1)]">
-          <video id="video-web" src={`${base}xray-web.mp4`} autoplay loop muted playsinline class="w-full block transition-opacity duration-500"></video>
-          <video id="video-program" src={`${base}xray-program.mp4`} loop muted playsinline class="w-full absolute inset-0 opacity-0 transition-opacity duration-500"></video>
+          <video id="video-web" src={`${base}xray-web.mp4`} autoplay muted playsinline class="w-full block transition-opacity duration-500"></video>
+          <video id="video-program" src={`${base}xray-program.mp4`} muted playsinline class="w-full absolute inset-0 opacity-0 transition-opacity duration-500"></video>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- Testimonials (auto-scrolling marquee) -->
+  <section id="testimonials" class="reveal py-32 overflow-hidden">
+    <div class="max-w-6xl mx-auto px-6 mb-12 text-center">
+      <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">Loved by builders who hate measuring twice</h2>
+      <p class="text-gray-600 dark:text-gray-400">From designers and engineers who use Xray every day.</p>
+    </div>
+
+    <div class="relative">
+      <!-- Edge fade masks -->
+      <div class="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 sm:w-40 bg-gradient-to-r from-white dark:from-[#0a0a0a] to-transparent"></div>
+      <div class="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 sm:w-40 bg-gradient-to-l from-white dark:from-[#0a0a0a] to-transparent"></div>
+
+      <!-- Marquee track (cards rendered twice for seamless loop) -->
+      <div class="marquee-track flex gap-6 w-max">
+        {testimonials.map((t) => (
+          <article class="flex-shrink-0 w-[408px] p-6 rounded-2xl border border-black/[0.06] dark:border-white/5 bg-black/[0.02] dark:bg-white/[0.02] hover:border-black/[0.08] dark:hover:border-white/10 hover:bg-black/[0.03] dark:hover:bg-white/[0.03] transition-colors">
+            <p class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed mb-6">&ldquo;{t.quote}&rdquo;</p>
+            <div class="flex items-center gap-3">
+              {t.avatar ? (
+                <img src={t.avatar} alt={t.name} class="w-10 h-10 rounded-full object-cover bg-black/[0.04] dark:bg-white/[0.05]" loading="lazy" />
+              ) : (
+                <div class={`w-10 h-10 rounded-full flex items-center justify-center font-semibold text-sm ${t.avatarBg} ${t.avatarText}`}>{t.initials}</div>
+              )}
+              <div>
+                <div class="text-gray-900 dark:text-white text-sm font-medium">{t.name}</div>
+                <div class="text-gray-600 dark:text-gray-500 text-xs">{t.role}</div>
+              </div>
+            </div>
+          </article>
+        ))}
+        {testimonials.map((t) => (
+          <article aria-hidden="true" class="flex-shrink-0 w-[340px] p-6 rounded-2xl border border-white/5 bg-white/[0.02] hover:border-white/10 hover:bg-white/[0.03] transition-colors">
+            <p class="text-gray-300 text-sm leading-relaxed mb-6">&ldquo;{t.quote}&rdquo;</p>
+            <div class="flex items-center gap-3">
+              {t.avatar ? (
+                <img src={t.avatar} alt={t.name} class="w-10 h-10 rounded-full object-cover bg-black/[0.04] dark:bg-white/[0.05]" loading="lazy" />
+              ) : (
+                <div class={`w-10 h-10 rounded-full flex items-center justify-center font-semibold text-sm ${t.avatarBg} ${t.avatarText}`}>{t.initials}</div>
+              )}
+              <div>
+                <div class="text-white text-sm font-medium">{t.name}</div>
+                <div class="text-gray-500 text-xs">{t.role}</div>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
   <!-- Interactive Demo -->
-  <section id="demo" class="relative py-32">
+  <section id="demo" class="reveal relative py-32">
     <div class="max-w-6xl mx-auto px-6">
       <div class="text-center mb-16">
-        <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4">Try it right here</h2>
-        <p class="text-gray-400">Hover over the elements below. This is what Xray feels like.</p>
+        <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">Try it right here</h2>
+        <p class="text-gray-600 dark:text-gray-400">Hover over the elements below. This is what Xray feels like.</p>
       </div>
 
       <!-- Mock UI -->
@@ -167,111 +326,301 @@ const base = import.meta.env.BASE_URL;
     </div>
   </section>
 
-  <!-- Features -->
-  <section id="features" class="py-32">
+  <!-- Built for -->
+  <section id="built-for" class="reveal py-32">
     <div class="max-w-6xl mx-auto px-6">
       <div class="text-center mb-16">
-        <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4">How it works</h2>
-        <p class="text-gray-400">Three steps. Zero configuration.</p>
+        <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">Built for the way you actually work</h2>
+        <p class="text-gray-600 dark:text-gray-400">Three workflows. One shortcut.</p>
       </div>
 
       <div class="grid sm:grid-cols-3 gap-8">
-        <!-- Step 1 -->
-        <div class="group p-8 rounded-2xl border border-white/5 bg-white/[0.02] hover:border-xray-green/30 hover:bg-xray-green/[0.03] transition-all">
+        <!-- Designers -->
+        <div class="group p-8 rounded-2xl border border-black/[0.06] dark:border-white/5 bg-black/[0.02] dark:bg-white/[0.02] hover:border-xray-green/30 hover:bg-xray-green/[0.03] transition-all">
           <div class="w-12 h-12 rounded-xl bg-xray-green/10 flex items-center justify-center mb-6 group-hover:bg-xray-green/20 transition-colors">
-            <svg class="w-6 h-6 text-xray-green" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15"/></svg>
+            <svg class="w-6 h-6 text-xray-green" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42"/></svg>
           </div>
-          <div class="text-sm text-xray-green-light font-medium mb-2">Step 1</div>
-          <h3 class="text-xl font-semibold text-white mb-3">Activate</h3>
-          <p class="text-gray-400 text-sm leading-relaxed">Press <kbd class="px-1.5 py-0.5 bg-white/5 border border-white/10 rounded text-xs font-mono">Cmd+Shift+X</kbd> to enable the inspector overlay across your entire screen.</p>
+          <div class="text-sm text-xray-green-light font-medium mb-2">For designers</div>
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Pixel-perfect audits</h3>
+          <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">Measure spacing, sizing, and alignment across any macOS app. No more screenshot &rarr; Figma copy-paste loops.</p>
         </div>
 
-        <!-- Step 2 -->
-        <div class="group p-8 rounded-2xl border border-white/5 bg-white/[0.02] hover:border-xray-green/30 hover:bg-xray-green/[0.03] transition-all">
+        <!-- Developers -->
+        <div class="group p-8 rounded-2xl border border-black/[0.06] dark:border-white/5 bg-black/[0.02] dark:bg-white/[0.02] hover:border-xray-green/30 hover:bg-xray-green/[0.03] transition-all">
           <div class="w-12 h-12 rounded-xl bg-xray-green/10 flex items-center justify-center mb-6 group-hover:bg-xray-green/20 transition-colors">
-            <svg class="w-6 h-6 text-xray-green" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.042 21.672L13.684 16.6m0 0l-2.51 2.225.569-9.47 5.227 7.917-3.286-.672zM12 2.25V4.5m5.834.166l-1.591 1.591M20.25 10.5H18M7.757 14.743l-1.59 1.59M6 10.5H3.75m4.007-4.243l-1.59-1.59"/></svg>
+            <svg class="w-6 h-6 text-xray-green" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5"/></svg>
           </div>
-          <div class="text-sm text-xray-green-light font-medium mb-2">Step 2</div>
-          <h3 class="text-xl font-semibold text-white mb-3">Inspect</h3>
-          <p class="text-gray-400 text-sm leading-relaxed">Hover over any window, button, or UI element. Xray highlights it in real-time with role and dimension info.</p>
+          <div class="text-sm text-xray-green-light font-medium mb-2">For developers</div>
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">Inspect any app</h3>
+          <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">Mail, Slack, Finder, System Settings &mdash; anything macOS renders. The same DevTools workflow, beyond the browser.</p>
         </div>
 
-        <!-- Step 3 -->
-        <div class="group p-8 rounded-2xl border border-white/5 bg-white/[0.02] hover:border-xray-green/30 hover:bg-xray-green/[0.03] transition-all">
+        <!-- QA & writers -->
+        <div class="group p-8 rounded-2xl border border-black/[0.06] dark:border-white/5 bg-black/[0.02] dark:bg-white/[0.02] hover:border-xray-green/30 hover:bg-xray-green/[0.03] transition-all">
           <div class="w-12 h-12 rounded-xl bg-xray-green/10 flex items-center justify-center mb-6 group-hover:bg-xray-green/20 transition-colors">
-            <svg class="w-6 h-6 text-xray-green" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75"/></svg>
+            <svg class="w-6 h-6 text-xray-green" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25zM6.75 12h.008v.008H6.75V12zm0 3h.008v.008H6.75V15zm0 3h.008v.008H6.75V18z"/></svg>
           </div>
-          <div class="text-sm text-xray-green-light font-medium mb-2">Step 3</div>
-          <h3 class="text-xl font-semibold text-white mb-3">Capture</h3>
-          <p class="text-gray-400 text-sm leading-relaxed">Click to capture the highlighted element. It's instantly copied to your clipboard. Paste it anywhere.</p>
+          <div class="text-sm text-xray-green-light font-medium mb-2">For QA &amp; writers</div>
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-3">One-click bug reports</h3>
+          <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">Grab role &amp; dimensions of any UI element. Paste straight into your tracker, doc, or tutorial.</p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- FAQ -->
-  <section id="faq" class="py-32">
+  <section id="faq" class="reveal py-32">
     <div class="max-w-3xl mx-auto px-6">
-      <h2 class="text-3xl sm:text-4xl font-bold text-white mb-12 text-center">FAQ</h2>
+      <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-12 text-center">FAQ</h2>
 
       <div class="space-y-4">
-        <details class="group rounded-xl border border-white/5 bg-white/[0.02] open:border-white/10 transition-all">
-          <summary class="flex items-center justify-between cursor-pointer px-6 py-5 text-white font-medium">
-            Is Xray really free?
-            <svg class="w-5 h-5 text-gray-500 group-open:rotate-45 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
-          </summary>
-          <div class="px-6 pb-5 text-gray-400 text-sm leading-relaxed">Yes, 100% free and open source under the MIT license. No accounts, no subscriptions, no tracking.</div>
-        </details>
-
-        <details class="group rounded-xl border border-white/5 bg-white/[0.02] open:border-white/10 transition-all">
-          <summary class="flex items-center justify-between cursor-pointer px-6 py-5 text-white font-medium">
+        <details class="group rounded-xl border border-black/[0.06] dark:border-white/5 bg-black/[0.02] dark:bg-white/[0.02] open:border-black/[0.1] dark:open:border-white/10 transition-all">
+          <summary class="flex items-center justify-between cursor-pointer px-6 py-5 text-gray-900 dark:text-white font-medium">
             Does it work with any application?
             <svg class="w-5 h-5 text-gray-500 group-open:rotate-45 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
           </summary>
-          <div class="px-6 pb-5 text-gray-400 text-sm leading-relaxed">Xray uses the macOS Accessibility API, so it works with virtually any application — browsers, native apps, Finder, System Settings, and more.</div>
+          <div class="px-6 pb-5 text-gray-600 dark:text-gray-400 text-sm leading-relaxed">Xray uses the macOS Accessibility API, so it works with virtually any application — browsers, native apps, Finder, System Settings, and more.</div>
         </details>
 
-        <details class="group rounded-xl border border-white/5 bg-white/[0.02] open:border-white/10 transition-all">
-          <summary class="flex items-center justify-between cursor-pointer px-6 py-5 text-white font-medium">
+        <details class="group rounded-xl border border-black/[0.06] dark:border-white/5 bg-black/[0.02] dark:bg-white/[0.02] open:border-black/[0.1] dark:open:border-white/10 transition-all">
+          <summary class="flex items-center justify-between cursor-pointer px-6 py-5 text-gray-900 dark:text-white font-medium">
             What permissions does Xray need?
             <svg class="w-5 h-5 text-gray-500 group-open:rotate-45 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
           </summary>
-          <div class="px-6 pb-5 text-gray-400 text-sm leading-relaxed">Xray requires Accessibility and Screen Recording permissions. On first launch, macOS will prompt you to grant them in System Settings > Privacy & Security.</div>
+          <div class="px-6 pb-5 text-gray-600 dark:text-gray-400 text-sm leading-relaxed">Xray requires Accessibility and Screen Recording permissions. On first launch, macOS will prompt you to grant them in System Settings &gt; Privacy &amp; Security. Nothing leaves your machine.</div>
         </details>
 
-        <details class="group rounded-xl border border-white/5 bg-white/[0.02] open:border-white/10 transition-all">
-          <summary class="flex items-center justify-between cursor-pointer px-6 py-5 text-white font-medium">
-            Does it support Intel Macs?
+        <details class="group rounded-xl border border-black/[0.06] dark:border-white/5 bg-black/[0.02] dark:bg-white/[0.02] open:border-black/[0.1] dark:open:border-white/10 transition-all">
+          <summary class="flex items-center justify-between cursor-pointer px-6 py-5 text-gray-900 dark:text-white font-medium">
+            Is Xray really free?
             <svg class="w-5 h-5 text-gray-500 group-open:rotate-45 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
           </summary>
-          <div class="px-6 pb-5 text-gray-400 text-sm leading-relaxed">Currently Xray is built for Apple Silicon (M1/M2/M3/M4). Intel Mac support via universal binary is planned for a future release.</div>
+          <div class="px-6 pb-5 text-gray-600 dark:text-gray-400 text-sm leading-relaxed">Yes, 100% free and open source under the MIT license. No accounts, no subscriptions, no tracking.</div>
         </details>
 
-        <details class="group rounded-xl border border-white/5 bg-white/[0.02] open:border-white/10 transition-all">
-          <summary class="flex items-center justify-between cursor-pointer px-6 py-5 text-white font-medium">
+        <details class="group rounded-xl border border-black/[0.06] dark:border-white/5 bg-black/[0.02] dark:bg-white/[0.02] open:border-black/[0.1] dark:open:border-white/10 transition-all">
+          <summary class="flex items-center justify-between cursor-pointer px-6 py-5 text-gray-900 dark:text-white font-medium">
             Where does the captured image go?
             <svg class="w-5 h-5 text-gray-500 group-open:rotate-45 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
           </summary>
-          <div class="px-6 pb-5 text-gray-400 text-sm leading-relaxed">It goes straight to your clipboard. Just press Cmd+V to paste it into any app — Slack, Figma, Notion, or anywhere else.</div>
+          <div class="px-6 pb-5 text-gray-600 dark:text-gray-400 text-sm leading-relaxed">It goes straight to your clipboard. Just press Cmd+V to paste it into any app — Slack, Figma, Notion, or anywhere else.</div>
+        </details>
+
+        <details class="group rounded-xl border border-black/[0.06] dark:border-white/5 bg-black/[0.02] dark:bg-white/[0.02] open:border-black/[0.1] dark:open:border-white/10 transition-all">
+          <summary class="flex items-center justify-between cursor-pointer px-6 py-5 text-gray-900 dark:text-white font-medium">
+            Does it support Intel Macs?
+            <svg class="w-5 h-5 text-gray-500 group-open:rotate-45 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+          </summary>
+          <div class="px-6 pb-5 text-gray-600 dark:text-gray-400 text-sm leading-relaxed">Currently Xray is built for Apple Silicon (M1/M2/M3/M4). Intel Mac support via universal binary is planned for a future release.</div>
         </details>
       </div>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="border-t border-white/5 py-16">
-    <div class="max-w-6xl mx-auto px-6 flex flex-col items-center text-center">
-      <div class="flex items-center gap-2.5 mb-4">
-        <img src={`${base}icon.png`} alt="Xray" class="h-8 rounded-lg" />
-        <span class="font-semibold text-white text-xl">Xray</span>
+  <footer class="reveal border-t border-black/[0.06] dark:border-white/5">
+    <div class="max-w-6xl mx-auto px-6 py-16">
+      <div class="grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr] gap-12 mb-12">
+        <!-- Brand -->
+        <div>
+          <div class="flex items-center gap-2.5 mb-4">
+            <img src={`${base}icon.png`} alt="Xray" class="h-8 rounded-lg" />
+            <span class="font-semibold text-gray-900 dark:text-white text-xl">Xray</span>
+          </div>
+          <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed mb-1 max-w-md">A simple, intuitive, and light universal UI capture and inspection tool for macOS.</p>
+          <p class="text-gray-500 dark:text-gray-500 text-sm">Built for creators, developers, and designers.</p>
+        </div>
+
+        <!-- Project -->
+        <div>
+          <div class="text-gray-900 dark:text-white font-semibold mb-4 text-sm">Project</div>
+          <ul class="space-y-3 text-sm">
+            <li><a href="https://github.com/wlswo/xray" target="_blank" rel="noopener" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors">Source code</a></li>
+            <li><a href="https://github.com/wlswo/xray/releases" target="_blank" rel="noopener" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors">Releases</a></li>
+            <li><a href="https://github.com/wlswo/xray/issues" target="_blank" rel="noopener" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors">Report an issue</a></li>
+          </ul>
+        </div>
+
+        <!-- Connect -->
+        <div>
+          <div class="text-gray-900 dark:text-white font-semibold mb-4 text-sm">Connect</div>
+          <ul class="space-y-3 text-sm">
+            <li><a href="https://github.com/wlswo" target="_blank" rel="noopener" class="text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors">@wlswo on GitHub</a></li>
+            {stars !== null && (
+              <li><a href="https://github.com/wlswo/xray/stargazers" target="_blank" rel="noopener" class="inline-flex items-center gap-1.5 text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors">
+                <svg class="w-4 h-4 text-amber-300" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.16c.969 0 1.371 1.24.588 1.81l-3.366 2.446a1 1 0 00-.364 1.118l1.286 3.957c.3.921-.755 1.688-1.539 1.118l-3.366-2.446a1 1 0 00-1.176 0l-3.366 2.446c-.784.57-1.838-.197-1.539-1.118l1.286-3.957a1 1 0 00-.364-1.118L2.05 9.384c-.783-.57-.38-1.81.588-1.81h4.16a1 1 0 00.95-.69l1.286-3.957z"/></svg>
+                {formatStars(stars)} stargazers
+              </a></li>
+            )}
+          </ul>
+        </div>
       </div>
-      <p class="text-gray-400 text-sm leading-relaxed mb-1">A simple, intuitive, and light universal UI capture and inspection tool for macOS.</p>
-      <p class="text-gray-500 text-sm">Built for creators, developers, and designers.</p>
-      <div class="mt-8 w-full">
-        <p class="text-gray-600 text-xs">MIT License &copy; 2026 Xray</p>
+
+      <div class="pt-8 border-t border-black/[0.06] dark:border-white/5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-500 dark:text-gray-500">
+        <p>v1.1.0 &middot; MIT License &middot; &copy; 2026 Xray</p>
+        <p>Made with care for macOS</p>
       </div>
     </div>
   </footer>
+
+  <!-- Scroll to top button -->
+  <button
+    id="scroll-top"
+    type="button"
+    aria-label="Scroll to top"
+    class="fixed bottom-16 right-16 z-40 w-[84px] h-[84px] inline-flex items-center justify-center rounded-full bg-black/[0.04] dark:bg-white/5 border border-black/[0.08] dark:border-white/10 backdrop-blur-md text-gray-700 dark:text-gray-300 hover:text-white hover:bg-xray-green/40 hover:border-xray-green/40 opacity-0 pointer-events-none translate-y-2 transition-all duration-300 shadow-lg"
+  >
+    <svg class="w-9 h-9" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/>
+    </svg>
+  </button>
+
+  <script>
+    const scrollTopBtn = document.getElementById('scroll-top')!;
+    const hiddenClasses = ['opacity-0', 'pointer-events-none', 'translate-y-2'];
+    const toggleScrollTop = () => {
+      if (window.scrollY > 400) {
+        scrollTopBtn.classList.remove(...hiddenClasses);
+      } else {
+        scrollTopBtn.classList.add(...hiddenClasses);
+      }
+    };
+    toggleScrollTop();
+    window.addEventListener('scroll', toggleScrollTop, { passive: true });
+    scrollTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+
+  <!-- Testimonials marquee + drag -->
+  <script>
+    const track = document.querySelector('.marquee-track') as HTMLElement | null;
+    if (track) {
+      const SPEED = 40; // px/sec auto-scroll
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      let halfWidth = 0;
+      let position = 0;
+      let isDragging = false;
+      let isHovered = false;
+      let dragStartX = 0;
+      let dragStartPos = 0;
+      let lastTime = performance.now();
+
+      function tick(now: number) {
+        if (halfWidth === 0) {
+          halfWidth = track!.scrollWidth / 2;
+        }
+        const dt = (now - lastTime) / 1000;
+        lastTime = now;
+
+        if (halfWidth > 0 && !isDragging && !isHovered && !reduceMotion) {
+          position -= SPEED * dt;
+        }
+
+        if (halfWidth > 0) {
+          while (position <= -halfWidth) position += halfWidth;
+          while (position > 0) position -= halfWidth;
+        }
+
+        track!.style.transform = `translate3d(${position}px, 0, 0)`;
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+
+      // Recalc halfWidth on resize
+      window.addEventListener('resize', () => {
+        halfWidth = track.scrollWidth / 2;
+      });
+
+      // Pause on hover
+      track.addEventListener('mouseenter', () => { isHovered = true; });
+      track.addEventListener('mouseleave', () => { isHovered = false; });
+
+      // Drag handlers
+      track.addEventListener('pointerdown', (e: PointerEvent) => {
+        isDragging = true;
+        dragStartX = e.clientX;
+        dragStartPos = position;
+        track.setPointerCapture(e.pointerId);
+      });
+      track.addEventListener('pointermove', (e: PointerEvent) => {
+        if (!isDragging) return;
+        position = dragStartPos + (e.clientX - dragStartX);
+      });
+      const endDrag = (e: PointerEvent) => {
+        if (!isDragging) return;
+        isDragging = false;
+        if (track.hasPointerCapture(e.pointerId)) {
+          track.releasePointerCapture(e.pointerId);
+        }
+      };
+      track.addEventListener('pointerup', endDrag);
+      track.addEventListener('pointercancel', endDrag);
+
+      // Prevent native image drag
+      track.querySelectorAll('img').forEach((img) => {
+        img.setAttribute('draggable', 'false');
+      });
+    }
+  </script>
+
+  <!-- Hero animation styles -->
+  <style>
+    @keyframes heroFadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes heroShimmer {
+      0%, 100% { background-position: 0% 50%; }
+      50%      { background-position: 100% 50%; }
+    }
+
+    .hero-word {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(28px);
+      animation: heroFadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      animation-delay: calc(var(--i, 0) * 110ms + 150ms);
+    }
+
+    /* Gradient word: entrance + continuous shimmer */
+    .hero-word-gradient {
+      background-size: 220% auto;
+      background-position: 0% 50%;
+      animation:
+        heroFadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards,
+        heroShimmer 5s ease-in-out infinite;
+      animation-delay: calc(var(--i, 0) * 110ms + 150ms), 1.5s;
+    }
+
+    /* Hover the headline → shimmer accelerates */
+    .hero-headline:hover .hero-word-gradient {
+      animation-duration: 0.9s, 1.2s;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero-word {
+        opacity: 1;
+        transform: none;
+        animation: none;
+      }
+      .hero-word-gradient {
+        animation: none;
+      }
+    }
+
+    /* Testimonials marquee — JS-driven for drag support */
+    .marquee-track {
+      will-change: transform;
+      cursor: grab;
+      user-select: none;
+      touch-action: pan-y;
+    }
+    .marquee-track:active {
+      cursor: grabbing;
+    }
+  </style>
 
   <!-- Interactive Demo Script -->
   <script>
@@ -330,32 +679,83 @@ const base = import.meta.env.BASE_URL;
     });
   </script>
 
-  <!-- Video tab switch script -->
+  <!-- Stories-style video showcase with auto-rotation -->
   <script>
-    const videoWeb = document.getElementById('video-web') as HTMLVideoElement;
-    const videoProgram = document.getElementById('video-program') as HTMLVideoElement;
-    const btnWeb = document.getElementById('btn-web')!;
-    const btnProgram = document.getElementById('btn-program')!;
+    const PLAYBACK_RATE = 1.5;
 
-    const activeClass = 'px-5 py-2 rounded-lg text-sm font-medium transition-all duration-300 bg-xray-green text-white';
-    const inactiveClass = 'px-5 py-2 rounded-lg text-sm font-medium transition-all duration-300 bg-white/5 text-gray-400 hover:bg-white/10';
+    const videos = [
+      document.getElementById('video-web') as HTMLVideoElement,
+      document.getElementById('video-program') as HTMLVideoElement,
+    ];
+    const segments = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-video-idx]'));
+    const fills = segments.map((seg) => seg.querySelector('[data-progress-fill]') as HTMLElement);
+    const labels = segments.map((seg) => seg.querySelector('[data-progress-label]') as HTMLElement);
 
-    btnWeb.addEventListener('click', () => {
-      videoWeb.currentTime = 0;
-      videoWeb.play();
-      videoWeb.style.opacity = '1';
-      videoProgram.style.opacity = '0';
-      btnWeb.className = activeClass;
-      btnProgram.className = inactiveClass;
+    let activeIndex = 0;
+
+    // Force playback rate (set on metadata load to survive resets)
+    videos.forEach((v) => {
+      v.playbackRate = PLAYBACK_RATE;
+      v.addEventListener('loadedmetadata', () => {
+        v.playbackRate = PLAYBACK_RATE;
+      });
     });
 
-    btnProgram.addEventListener('click', () => {
-      videoProgram.currentTime = 0;
-      videoProgram.play();
-      videoWeb.style.opacity = '0';
-      videoProgram.style.opacity = '1';
-      btnProgram.className = activeClass;
-      btnWeb.className = inactiveClass;
+    function setLabelStates(activeIdx: number) {
+      labels.forEach((label, i) => {
+        if (i === activeIdx) {
+          label.classList.add('text-xray-green-light');
+          label.classList.remove('text-gray-500');
+        } else {
+          label.classList.remove('text-xray-green-light');
+          label.classList.add('text-gray-500');
+        }
+      });
+    }
+
+    function activate(idx: number) {
+      if (idx === activeIndex) return;
+
+      const prev = videos[activeIndex];
+      const next = videos[idx];
+
+      prev.pause();
+      prev.style.opacity = '0';
+
+      // Reset only the new active bar; leave others as-is
+      fills[idx].style.width = '0%';
+
+      setLabelStates(idx);
+
+      next.currentTime = 0;
+      next.style.opacity = '1';
+      next.playbackRate = PLAYBACK_RATE;
+      next.play();
+
+      activeIndex = idx;
+    }
+
+    videos.forEach((v, i) => {
+      v.addEventListener('ended', () => {
+        if (i !== activeIndex) return;
+        fills[i].style.width = '100%';
+        activate(i === 0 ? 1 : 0);
+      });
+    });
+
+    // Smooth progress fill driven by rAF (~60fps) instead of sparse timeupdate events
+    function tickProgress() {
+      const v = videos[activeIndex];
+      if (v && v.duration > 0 && !v.ended) {
+        const pct = Math.min(100, (v.currentTime / v.duration) * 100);
+        fills[activeIndex].style.width = `${pct}%`;
+      }
+      requestAnimationFrame(tickProgress);
+    }
+    requestAnimationFrame(tickProgress);
+
+    segments.forEach((seg, i) => {
+      seg.addEventListener('click', () => activate(i));
     });
   </script>
 </Layout>
