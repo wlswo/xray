@@ -92,9 +92,9 @@ const testimonials: Testimonial[] = [
         <img src={`${base}icon.png`} alt="Xray" class="h-10 rounded-lg" />
         <span class="font-semibold text-gray-900 dark:text-white text-2xl">Xray</span>
       </a>
-      <div class="flex items-center gap-8">
-        <a href="#built-for" class="text-lg text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors">Use cases</a>
-        <a href="#demo" class="text-lg text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors">Demo</a>
+      <div class="flex items-center gap-2 sm:gap-8">
+        <a href="#built-for" class="hidden sm:inline text-lg text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors">Use cases</a>
+        <a href="#demo" class="hidden sm:inline text-lg text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors">Demo</a>
         <button id="theme-toggle" type="button" aria-label="Toggle theme" class="inline-flex items-center justify-center w-11 h-11 rounded-lg bg-black/[0.04] hover:bg-black/[0.06] dark:bg-white/5 dark:hover:bg-white/10 border border-black/[0.06] dark:border-white/10 text-gray-700 dark:text-gray-300 transition-colors">
           {/* Sun (visible in dark mode → click goes to light) */}
           <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"/></svg>
@@ -104,14 +104,14 @@ const testimonials: Testimonial[] = [
         <a href="https://github.com/wlswo/xray" target="_blank" rel="noopener" class="inline-flex rounded-lg bg-black/[0.04] hover:bg-black/[0.06] dark:bg-white/5 dark:hover:bg-white/10 border border-black/[0.08] dark:border-white/10 text-lg text-gray-700 hover:text-gray-900 dark:text-gray-200 dark:hover:text-white transition-all">
           {stars !== null && (
             <Fragment>
-              <span class="flex items-center gap-2 pl-5 pr-4 py-3 font-semibold">
+              <span class="flex items-center gap-2 pl-4 pr-4 sm:pl-5 py-3 font-semibold">
                 <svg class="w-5 h-5 text-amber-300" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.16c.969 0 1.371 1.24.588 1.81l-3.366 2.446a1 1 0 00-.364 1.118l1.286 3.957c.3.921-.755 1.688-1.539 1.118l-3.366-2.446a1 1 0 00-1.176 0l-3.366 2.446c-.784.57-1.838-.197-1.539-1.118l1.286-3.957a1 1 0 00-.364-1.118L2.05 9.384c-.783-.57-.38-1.81.588-1.81h4.16a1 1 0 00.95-.69l1.286-3.957z"/></svg>
                 {formatStars(stars)}
               </span>
-              <span aria-hidden="true" class="w-px bg-black/[0.1] dark:bg-white/15 my-2"></span>
+              <span aria-hidden="true" class="hidden sm:block w-px bg-black/[0.1] dark:bg-white/15 my-2"></span>
             </Fragment>
           )}
-          <span class={`flex items-center gap-2 py-3 ${stars !== null ? 'pl-4 pr-5' : 'px-5'}`}>
+          <span class={`hidden sm:flex items-center gap-2 py-3 ${stars !== null ? 'pl-4 pr-5' : 'px-5'}`}>
             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
             Star on GitHub
           </span>
@@ -121,7 +121,7 @@ const testimonials: Testimonial[] = [
   </nav>
 
   <!-- Hero -->
-  <section class="relative pt-28 pb-20">
+  <section class="relative pt-24 sm:pt-28 pb-12 sm:pb-20">
     <!-- Background glow -->
     <div class="absolute inset-0 overflow-hidden">
       <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-xray-green/10 rounded-full blur-[120px]"></div>
@@ -163,7 +163,7 @@ const testimonials: Testimonial[] = [
         <kbd class="px-2.5 py-1 bg-black/[0.06] dark:bg-white/10 border border-black/[0.1] dark:border-white/15 rounded-md text-sm font-mono font-semibold text-gray-800 dark:text-gray-100">Shift</kbd>
         <span class="text-gray-400 dark:text-gray-500">+</span>
         <kbd class="px-2.5 py-1 bg-black/[0.06] dark:bg-white/10 border border-black/[0.1] dark:border-white/15 rounded-md text-sm font-mono font-semibold text-gray-800 dark:text-gray-100">X</kbd>
-        <span class="text-gray-600 dark:text-gray-400 text-sm ml-1">to activate anywhere</span>
+        <span class="text-gray-600 dark:text-gray-400 text-sm ml-1">to activate<span class="hidden sm:inline"> anywhere</span></span>
       </div>
 
       <!-- Video Showcase -->
@@ -194,21 +194,21 @@ const testimonials: Testimonial[] = [
   </section>
 
   <!-- Testimonials (auto-scrolling marquee) -->
-  <section id="testimonials" class="reveal py-32 overflow-hidden">
+  <section id="testimonials" class="reveal py-20 sm:py-32 overflow-hidden">
     <div class="max-w-6xl mx-auto px-6 mb-12 text-center">
-      <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">Loved by builders who hate measuring twice</h2>
-      <p class="text-gray-600 dark:text-gray-400">From designers and engineers who use Xray every day.</p>
+      <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">Hear from our users</h2>
+      <p class="text-xs text-gray-500 dark:text-gray-500">just my friends</p>
     </div>
 
     <div class="relative">
       <!-- Edge fade masks -->
-      <div class="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 sm:w-40 bg-gradient-to-r from-white dark:from-[#0a0a0a] to-transparent"></div>
-      <div class="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 sm:w-40 bg-gradient-to-l from-white dark:from-[#0a0a0a] to-transparent"></div>
+      <div class="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 sm:w-40 bg-gradient-to-r from-white dark:from-[#0a0a0a] to-transparent"></div>
+      <div class="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 sm:w-40 bg-gradient-to-l from-white dark:from-[#0a0a0a] to-transparent"></div>
 
       <!-- Marquee track (cards rendered twice for seamless loop) -->
       <div class="marquee-track flex gap-6 w-max">
-        {testimonials.map((t) => (
-          <article class="flex-shrink-0 w-[408px] p-6 rounded-2xl border border-black/[0.06] dark:border-white/5 bg-black/[0.02] dark:bg-white/[0.02] hover:border-black/[0.08] dark:hover:border-white/10 hover:bg-black/[0.03] dark:hover:bg-white/[0.03] transition-colors">
+        {[...testimonials, ...testimonials].map((t, i) => (
+          <article aria-hidden={i >= testimonials.length ? 'true' : undefined} class="flex-shrink-0 w-[280px] sm:w-[408px] p-5 sm:p-6 rounded-2xl border border-black/[0.06] dark:border-white/5 bg-black/[0.02] dark:bg-white/[0.02] hover:border-black/[0.08] dark:hover:border-white/10 hover:bg-black/[0.03] dark:hover:bg-white/[0.03] transition-colors">
             <p class="text-gray-700 dark:text-gray-300 text-sm leading-relaxed mb-6">&ldquo;{t.quote}&rdquo;</p>
             <div class="flex items-center gap-3">
               {t.avatar ? (
@@ -223,28 +223,12 @@ const testimonials: Testimonial[] = [
             </div>
           </article>
         ))}
-        {testimonials.map((t) => (
-          <article aria-hidden="true" class="flex-shrink-0 w-[340px] p-6 rounded-2xl border border-white/5 bg-white/[0.02] hover:border-white/10 hover:bg-white/[0.03] transition-colors">
-            <p class="text-gray-300 text-sm leading-relaxed mb-6">&ldquo;{t.quote}&rdquo;</p>
-            <div class="flex items-center gap-3">
-              {t.avatar ? (
-                <img src={t.avatar} alt={t.name} class="w-10 h-10 rounded-full object-cover bg-black/[0.04] dark:bg-white/[0.05]" loading="lazy" />
-              ) : (
-                <div class={`w-10 h-10 rounded-full flex items-center justify-center font-semibold text-sm ${t.avatarBg} ${t.avatarText}`}>{t.initials}</div>
-              )}
-              <div>
-                <div class="text-white text-sm font-medium">{t.name}</div>
-                <div class="text-gray-500 text-xs">{t.role}</div>
-              </div>
-            </div>
-          </article>
-        ))}
       </div>
     </div>
   </section>
 
-  <!-- Interactive Demo -->
-  <section id="demo" class="reveal relative py-32">
+  <!-- Interactive Demo (hidden on mobile — hover-based interaction doesn't translate to touch) -->
+  <section id="demo" class="reveal relative py-20 sm:py-32 hidden sm:block">
     <div class="max-w-6xl mx-auto px-6">
       <div class="text-center mb-16">
         <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">Try it right here</h2>
@@ -264,7 +248,7 @@ const testimonials: Testimonial[] = [
         </div>
 
         <!-- Mock content -->
-        <div class="p-8 grid grid-cols-3 gap-6" data-xray-role="Group">
+        <div class="p-4 sm:p-8 grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6" data-xray-role="Group">
           <!-- Sidebar -->
           <div class="space-y-3" data-xray-role="List">
             <div class="px-4 py-2 rounded-lg bg-xray-green/20 text-xray-green-light text-sm font-medium" data-xray-role="MenuItem">Dashboard</div>
@@ -327,7 +311,7 @@ const testimonials: Testimonial[] = [
   </section>
 
   <!-- Built for -->
-  <section id="built-for" class="reveal py-32">
+  <section id="built-for" class="reveal py-20 sm:py-32">
     <div class="max-w-6xl mx-auto px-6">
       <div class="text-center mb-16">
         <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-4">Built for the way you actually work</h2>
@@ -369,7 +353,7 @@ const testimonials: Testimonial[] = [
   </section>
 
   <!-- FAQ -->
-  <section id="faq" class="reveal py-32">
+  <section id="faq" class="reveal py-20 sm:py-32">
     <div class="max-w-3xl mx-auto px-6">
       <h2 class="text-3xl sm:text-4xl font-bold text-gray-900 dark:text-white mb-12 text-center">FAQ</h2>
 
@@ -468,9 +452,9 @@ const testimonials: Testimonial[] = [
     id="scroll-top"
     type="button"
     aria-label="Scroll to top"
-    class="fixed bottom-16 right-16 z-40 w-[84px] h-[84px] inline-flex items-center justify-center rounded-full bg-black/[0.04] dark:bg-white/5 border border-black/[0.08] dark:border-white/10 backdrop-blur-md text-gray-700 dark:text-gray-300 hover:text-white hover:bg-xray-green/40 hover:border-xray-green/40 opacity-0 pointer-events-none translate-y-2 transition-all duration-300 shadow-lg"
+    class="fixed bottom-6 right-6 sm:bottom-16 sm:right-16 z-40 w-14 h-14 sm:w-[84px] sm:h-[84px] inline-flex items-center justify-center rounded-full bg-black/[0.04] dark:bg-white/5 border border-black/[0.08] dark:border-white/10 backdrop-blur-md text-gray-700 dark:text-gray-300 hover:text-white hover:bg-xray-green/40 hover:border-xray-green/40 opacity-0 pointer-events-none translate-y-2 transition-all duration-300 shadow-lg"
   >
-    <svg class="w-9 h-9" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+    <svg class="w-6 h-6 sm:w-9 sm:h-9" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/>
     </svg>
   </button>
