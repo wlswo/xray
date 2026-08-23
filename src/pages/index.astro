@@ -2,8 +2,12 @@
 import Layout from '../layouts/Layout.astro';
 const base = import.meta.env.BASE_URL;
 
+// Last known star count — used when the API is unreachable or rate limited at build time.
+// Updated: 2026-08-23
+const FALLBACK_STARS = 286;
+
 // Fetch GitHub star count at build time (with timeout + graceful fallback)
-let stars: number | null = null;
+let stars: number | null = FALLBACK_STARS;
 try {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 3000);
@@ -14,10 +18,10 @@ try {
   clearTimeout(timeoutId);
   if (res.ok) {
     const data = await res.json();
-    stars = typeof data.stargazers_count === 'number' ? data.stargazers_count : null;
+    stars = typeof data.stargazers_count === 'number' ? data.stargazers_count : FALLBACK_STARS;
   }
 } catch {
-  // Network error or rate limit — render without count
+  // Network error or rate limit — fall back to the last known count
 }
 
 function formatStars(n: number): string {
